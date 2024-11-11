@@ -13,35 +13,35 @@ spec:
     metadata: 
       labels: 
         app: vpro
-  spec: 
-    containers:
-      - name: db-cont
-        image: vprofile/vprofiledb:V1
-        volumeMounts: 
-          - mountPath: /var/lib/mysql
-            name: db-vol
-        ports: 
-          - name: vpro-db-port
-          - containerPort: 3306
-        env: 
-          - name: MYSQL_ROOT_PASSWORD
-            valueFrom: 
-             secretKeyRef:
-                name: app-secret
-                key: db-pass  
-    nodeSelector: 
-      zone: us-west-1b
-    volumes: 
-      - name: db-vol
-        awsElasticBlockStore: 
-        volumeID: vol-0f7569cd5ea47e105
-        fsType: ext4
-    initcontainers: 
-      - name: busybox
-        image: busybox:latest
-        args: ["rm", "rf", "/var/lib/mysql/lost+found"]
-        volumeMounts: 
-          - mountPath: /var/lib/mysql
-            name: db-vol
+    spec: 
+      containers:
+        - name: db-cont
+          image: vprofile/vprofiledb:V1
+          volumeMounts: 
+            - mountPath: /var/lib/mysql
+              name: db-vol
+          ports: 
+            - name: vpro-db-port
+              containerPort: 3306
+          env: 
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom: 
+              secretKeyRef:
+                  name: app-secret
+                  key: db-pass  
+      nodeSelector: 
+        zone: us-west-1b
+      volumes: 
+        - name: db-vol
+          awsElasticBlockStore: 
+          volumeID: vol-0f7569cd5ea47e105
+          fsType: ext4
+      initcontainers: 
+        - name: busybox
+          image: busybox:latest
+          args: ["rm", "rf", "/var/lib/mysql/lost+found"]
+          volumeMounts: 
+            - mountPath: /var/lib/mysql
+              name: db-vol
         
       
