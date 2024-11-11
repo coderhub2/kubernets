@@ -8,14 +8,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: vpro
+      app: vprodb
   template:
     metadata:
       labels:
-        app: vpro
+        app: vprodb
     spec:
       containers:
-        - name: db-cont
+        - name: vprodb
           image: vprofile/vprofiledb:V1
           volumeMounts:
             - mountPath: /var/lib/mysql
